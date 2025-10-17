@@ -1,0 +1,52 @@
+# .github/workflows/deploy-demo.yml
+name: Deploy Demo to GitHub Pages # 工作流名称
+
+on:
+  push:
+    branches:
+      - main # 当推送到 'main' 分支时触发
+  workflow_dispatch: # 允许手动从 GitHub Actions 页面触发
+
+jobs:
+  deploy_demo:
+    runs-on: ubuntu-latest # 在最新的 Ubuntu 运行器上执行任务
+
+    # 部署到 GitHub Pages 所需的权限
+    permissions:
+      contents: write # 允许 Actions 写入仓库内容 (用于推送 gh-pages 分支)
+      pages: write # 允许部署到 GitHub Pages
+      id-token: write # 启用 OIDC 认证 (现代 GitHub Pages 部署推荐)
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # 检出仓库代码
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 # 设置 Node.js 环境
+        with:
+          node-version: "20.x" # 使用 Node.js 20 LTS 版本
+          registry-url: "https://registry.npmjs.org/" # Points to the npmjs registry
+
+      - name: Install pnpm
+        run: |
+          corepack enable 
+          corepack prepare pnpm@9.0.6 --activate
+
+      - name: Install monorepo dependencies
+        # ⚡️ 关键: 在 monorepo 根目录安装所有包的依赖
+        # --frozen-lockfile 确保使用 pnpm-lock.yaml 中的精确版本
+        run: pnpm install --frozen-lockfile
+
+      - name: Build component library and demo application
+        # ⚡️ 关键: 运行 monorepo 根 package.json 中定义的 'build' 脚本
+        # 这个脚本应该负责先构建 lib (pnpm --filter responsive-textarea build)
+        # 再构建 demo (pnpm --filter responsive-textarea-demo build)
+        run: pnpm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3 # 部署到 gh-pages 的常用 Action
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} # GitHub 提供的内置 Token
+          publish_dir: ./dist # ⚡️ 关键: Demo 应用的构建输出目录 (位于 monorepo 根目录)
+          publish_branch: gh-pages # 发布到的分支
+          force_orphan: true # 推荐: 确保每次部署都完全覆盖 gh-pages 分支，保持其整洁
