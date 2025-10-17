@@ -1,0 +1,112 @@
+# Variable Height Virtualized List Demo
+
+A React demo showing virtualized lists with variable height items using TanStack Virtual.
+
+## Features
+
+- Two virtualized lists in one scrollable container
+- Dynamic height measurement for list items
+- Smooth scrolling performance
+- Faker.js for generating random content
+- TypeScript support
+
+## Technologies Used
+
+- React 18
+- [@tanstack/react-virtual](https://tanstack.com/virtual/latest) for virtualization
+- [@faker-js/faker](https://fakerjs.dev/) for demo data
+- Vite for development and building
+- TypeScript for type safety
+
+## Getting Started
+
+1. Install dependencies:
+```bash
+pnpm install
+```
+
+2. Start development server:
+```bash
+pnpm dev
+```
+
+3. Build for production:
+```bash
+pnpm build
+```
+
+## Project Structure
+
+- `src/main.tsx` - Main application code
+- `src/index.css` - Global styles
+- `src/styles.css` - Component-specific styles
+
+## How It Works
+
+The demo implements two virtualized lists:
+1. A top list with 100 items
+2. A bottom list with 300 items
+
+Each list item contains:
+- Row number
+- Random generated sentence with variable length
+
+The virtualization ensures only visible items are rendered, improving performance for long lists.
+
+
+
+
+# 可变高度虚拟列表演示
+
+使用 TanStack Virtual 实现的可变高度虚拟列表 React 演示项目。
+
+## 特性
+
+- 在一个滚动容器中实现两个虚拟列表
+- 列表项高度动态测量
+- 流畅的滚动性能
+- 使用 Faker.js 生成随机内容
+- TypeScript 支持
+
+## 使用技术
+
+- React 18
+- [@tanstack/react-virtual](https://tanstack.com/virtual/latest) 用于虚拟化
+- [@faker-js/faker](https://fakerjs.dev/) 用于生成演示数据
+- Vite 用于开发和构建
+- TypeScript 用于类型安全
+
+## 开始使用
+
+1. 安装依赖：
+```bash
+pnpm install
+```
+
+2. 启动开发服务器：
+```bash
+pnpm dev
+```
+
+3. 构建生产版本：
+```bash
+pnpm build
+```
+
+## 项目结构
+
+- `src/main.tsx` - 主应用程序代码
+- `src/index.css` - 全局样式
+- `src/styles.css` - 组件特定样式
+
+## 工作原理
+
+该演示实现了两个虚拟列表：
+1. 顶部列表包含 100 个项目
+2. 底部列表包含 300 个项目
+
+每个列表项包含：
+- 行号
+- 随机生成的可变长度句子
+
+虚拟化确保只渲染可见项目，提高长列表的性能表现。
