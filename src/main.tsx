@@ -2,7 +2,7 @@ import * as React from "react";
 import { createRoot } from "react-dom/client";
 import { faker } from "@faker-js/faker";
 
-import { useVirtualizer, useWindowVirtualizer } from "@tanstack/react-virtual";
+import { useVirtualizer, } from "@tanstack/react-virtual";
 
 import "./index.css";
 
@@ -18,7 +18,7 @@ const list = new Array(100).fill(true).map(() => faker.lorem.sentence(randomNumb
 function RowVirtualizerDynamic() {
   const parentRef = React.useRef<HTMLDivElement>(null);
 
-  const [enabled, setEnabled] = React.useState(true);
+  const [enabled] = React.useState(true);
 
   const count = sentences.length;
 
@@ -133,16 +133,10 @@ function App() {
           case "/":
             return <RowVirtualizerDynamic />;
         }
+        return <RowVirtualizerDynamic />;
       })()}
       <br />
       <br />
-      {process.env.NODE_ENV === "development" ? (
-        <p>
-          <strong>Notice:</strong> You are currently running React in
-          development mode. Rendering performance will be slightly degraded
-          until this application is built for production.
-        </p>
-      ) : null}
     </div>
   );
 }
